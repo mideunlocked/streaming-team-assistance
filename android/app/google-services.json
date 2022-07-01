@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "897677978291",
+    "project_id": "streaming-team-assistance",
+    "storage_bucket": "streaming-team-assistance.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897677978291:android:be111c0615c4d6308cdec6",
+        "android_client_info": {
+          "package_name": "com.example.stream_team_assistance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897677978291-p1usbpfjeii0it7f94i7ltd8r8l62s9q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL0VI8d6s57wfPOrcoAjK2_LzBcSqBKlo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "897677978291-p1usbpfjeii0it7f94i7ltd8r8l62s9q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
