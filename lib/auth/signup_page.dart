@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
+import 'package:stream_team_assistance/features/custom_progress.dart';
 import 'package:stream_team_assistance/scene/scene_home_page.dart';
 
 import 'login_page.dart';
@@ -96,16 +100,6 @@ class _SignupScreenState extends State<SignupScreen> {
           .collection("/teams/${userCredential.user?.uid}/units");
 
       DocumentReference docRef = await teams.add({
-        "adjustUp": false,
-        "adjustDown": false,
-        "adjustLeft": false,
-        "adjustRight": false,
-        "startStreaming": false,
-        "stopStreaming": false,
-        "startRecording": false,
-        "stopRecording": false,
-        "cameraTNA": false,
-        "controlTNA": false,
         "unitName": "Main unit",
       });
 
@@ -114,6 +108,36 @@ class _SignupScreenState extends State<SignupScreen> {
       });
       await teams.doc(docId).update({
         'docId': docId,
+      });
+
+      String unitUrl = "";
+      final url = Uri.parse(
+          "https://streaming-team-assistance-default-rtdb.firebaseio.com/teams/${userCredential.user?.uid}.json");
+
+      await http
+          .post(url,
+              body: jsonEncode({
+                "adjustUp": false,
+                "adjustDown": false,
+                "adjustLeft": false,
+                "adjustRight": false,
+                "startStreaming": false,
+                "stopStreaming": false,
+                "startRecording": false,
+                "stopRecording": false,
+                "cameraTNA": false,
+                "controlTNA": false,
+                "unitName": "Main unit",
+                "docId": docId,
+              }))
+          .then((response) {
+        setState(() {
+          unitUrl = json.decode(response.body)["name"];
+        });
+      });
+      print(unitUrl);
+      await teams.doc(docId).update({
+        "unitUrl": unitUrl,
       });
 
       Future.delayed(Duration.zero, () {
@@ -373,11 +397,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               signUp();
                             },
                             label: isProcessing == true
-                                ? CircularProgressIndicator(
-                                    color: Theme.of(context)
-                                        .textSelectionTheme
-                                        .cursorColor,
-                                  )
+                                ? const CustomProgressIndicator()
                                 : Text(
                                     "Sign up",
                                     style:

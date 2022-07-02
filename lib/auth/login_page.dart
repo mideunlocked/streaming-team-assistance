@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:stream_team_assistance/features/custom_progress.dart';
 import 'package:stream_team_assistance/scene/scene_home_page.dart';
 
 import 'forgot-password.dart';
@@ -203,13 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   label: Padding(
                                     padding: const EdgeInsets.all(80),
                                     child: _isLoading == true
-                                        ? Center(
-                                            child: CircularProgressIndicator(
-                                              color: Theme.of(context)
-                                                  .textSelectionTheme
-                                                  .cursorColor,
-                                            ),
-                                          )
+                                        ? const CustomProgressIndicator()
                                         : Text(
                                             "Login",
                                             style: GoogleFonts.workSans(
