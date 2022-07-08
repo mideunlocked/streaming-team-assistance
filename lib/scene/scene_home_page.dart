@@ -101,30 +101,71 @@ class _ChooseSceneState extends State<ChooseScene> {
                               Map<String, dynamic> data =
                                   document.data() as Map<String, dynamic>;
 
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ScenePage(
-                                        unitName: data["unitName"] ?? "",
-                                        unitUrl: data["unitUrl"] ?? "",
-                                        docId: data['docId'] ?? "",
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: Container(
+                              return Dismissible(
+                                key: UniqueKey(),
+                                onDismissed: ((direction) {
+                                  try {
+                                    FirebaseFirestore.instance
+                                        .collection("/teams/$currentUid/units/")
+                                        .doc(data["docId"])
+                                        .delete();
+
+                                    final url = Uri.parse(
+                                        "https://streaming-team-assistance-default-rtdb.firebaseio.com/teams/$currentUid/${data['unitUrl']}.json");
+                                    http.delete(url).catchError((e) {
+                                      print(e);
+                                    });
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                '${data["unitName"]} deleted')));
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('error: $e')));
+                                    print(e);
+                                  }
+                                }),
+                                background: Container(
                                   height: 200,
                                   width: 200,
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[300],
+                                    color: Colors.red,
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  child: Center(
-                                    child: Text(
-                                      data["unitName"],
-                                      style: GoogleFonts.workSans(),
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.delete_rounded,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ScenePage(
+                                          unitName: data["unitName"] ?? "",
+                                          unitUrl: data["unitUrl"] ?? "",
+                                          docId: data['docId'] ?? "",
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Container(
+                                    height: 200,
+                                    width: 200,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        data["unitName"] ?? "",
+                                        style: GoogleFonts.workSans(),
+                                      ),
                                     ),
                                   ),
                                 ),

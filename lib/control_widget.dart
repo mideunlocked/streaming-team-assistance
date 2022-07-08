@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,6 +38,9 @@ class _ButtonIconState extends State<ButtonIcon> {
   bool _button = false;
 
   void getValue() {
+    if (_button != widget.dbValue) {
+      Vibrate.vibrate();
+    }
     setState(() {
       _button = widget.dbValue;
     });
