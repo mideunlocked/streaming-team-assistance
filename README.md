@@ -16,7 +16,7 @@ Stream Team Assistance is a Flutter-based mobile application designed to facilit
 
 To get started with Stream Team Assistance, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/stream-team-assistance.git`.
+1. Clone the repository: `git clone https://github.com/mideunlocked/stream-team-assistance.git`.
 2. Navigate to the project directory: `cd stream-team-assistance`.
 3. Ensure you have Flutter and Dart SDK installed on your machine.
 4. Run `flutter pub get` to fetch the project dependencies.
@@ -51,4 +51,4 @@ Stream Team Assistance is released under the [MIT License](https://opensource.or
 
 ## Contact
 
-If you have any questions, suggestions, or feedback, feel free to reach out to us at streamteamassistance@example.com. We appreciate your interest and support in making Stream Team Assistance a reliable tool for stream team communication.
+If you have any questions, suggestions, or feedback, feel free to reach out to us at osuolaleariyo@gmail.com. We appreciate your interest and support in making Stream Team Assistance a reliable tool for stream team communication.
